@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 
-import { WEIGHTS } from '../../constants';
+import { SIZES, WEIGHTS } from '../../constants';
 
 import Breadcrumbs from '../Breadcrumbs';
 import Select from '../Select';
 import Spacer from '../Spacer';
-import ShoeSidebar from '../ShoeSidebar';
+import _ShoeSidebar from '../ShoeSidebar';
 import ShoeGrid from '../ShoeGrid';
 
 const ShoeIndex = ({ sortId, setSortId }) => {
@@ -15,14 +15,14 @@ const ShoeIndex = ({ sortId, setSortId }) => {
       <MainColumn>
         <Header>
           <Title>Running</Title>
-          <Select
+          <ShoeSelect
             label="Sort"
             value={sortId}
             onChange={(ev) => setSortId(ev.target.value)}
           >
             <option value="newest">Newest Releases</option>
             <option value="price">Price</option>
-          </Select>
+          </ShoeSelect>
         </Header>
         <Spacer size={32} />
         <ShoeGrid />
@@ -35,7 +35,7 @@ const ShoeIndex = ({ sortId, setSortId }) => {
             Shoes
           </Breadcrumbs.Crumb>
         </Breadcrumbs>
-        <Spacer size={42} />
+        <LeftColumnSpacer size={42} />
         <ShoeSidebar />
       </LeftColumn>
     </Wrapper>
@@ -47,10 +47,36 @@ const Wrapper = styled.div`
   flex-direction: row-reverse;
   align-items: baseline;
   gap: 32px;
+  @media(max-width: ${SIZES.tablet}) {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+`;
+
+const ShoeSelect = styled(Select)`
+  @media(max-width: ${SIZES.phone}) {
+    display: none;
+  }
+`
+
+const LeftColumnSpacer = styled(Spacer)`
+  @media(max-width: ${SIZES.tablet}) {
+    display: none;
+  }
+`;
+
+const ShoeSidebar = styled(_ShoeSidebar)`
+  @media(max-width: ${SIZES.tablet}) {
+    display: none;
+  }
 `;
 
 const LeftColumn = styled.div`
-  flex-basis: 248px;
+  flex-basis: 248px;  
+  @media(max-width: ${SIZES.tablet}) {
+    flex-basis: 0px;  
+  }
 `;
 
 const MainColumn = styled.div`
